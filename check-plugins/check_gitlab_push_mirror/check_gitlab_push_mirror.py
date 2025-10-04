@@ -85,13 +85,17 @@ def main():
         print("Group ID or Project ID are required")
         sys.exit(255)
 
+    if not len(states):
+        print("[UNKNOWN] no push mirrros found")
+        sys.exit(255)
+
     states.sort(key=lambda s: s.weight, reverse=True)
     for state in states:
         print(state)
 
-    if any(isinstance(s, StateCritical) for s in states):
+    if isinstance(states[0], StateCritical):
         sys.exit(2)
-    if any(isinstance(s, StateWarning) for s in states):
+    if isinstance(states[0], StateWarning):
         sys.exit(1)
 
     sys.exit(0)
